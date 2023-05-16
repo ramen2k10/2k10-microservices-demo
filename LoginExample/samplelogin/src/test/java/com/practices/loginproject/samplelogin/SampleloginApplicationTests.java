@@ -10,4 +10,7 @@ class SampleloginApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void contextLoads1() {
+	}
 }
