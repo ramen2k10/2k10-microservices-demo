@@ -1,0 +1,47 @@
+server:
+  port: 8899
+
+eureka:
+  instance:
+    hostname: localhost
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: userinfo-service
+        uri: lb://userinfo-service
+        predicates:
+        - Path=/userInfo/**
+        filters:
+         - name: CircuitBreaker
+           args:
+             name: userinfo-service
+             fallbackuri: forward:/userServiceFallback
+      - id: propertyinfo-service
+        uri: lb://propertyinfo-service
+        predicates:
+        - Path=/propertyInfo/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: propertyinfo-service
+            fallbackuri: forward:/propertyServiceFallback
+
+hystrix:
+  command:
+    fallbackcmd: 
+      execution:
+        isolation:
+            thread:
+             timeoutInMillieseconds: 5000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+          
+          
