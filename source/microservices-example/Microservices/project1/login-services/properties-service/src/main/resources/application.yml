@@ -1,0 +1,8 @@
+server:
+  port: 7789
+spring:
+  application:
+    name: propertyinfo-service
+eureka:
+  instance:
+    hostname: localhost
