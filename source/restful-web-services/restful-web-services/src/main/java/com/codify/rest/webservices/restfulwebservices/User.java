@@ -2,10 +2,15 @@ package com.codify.rest.webservices.restfulwebservices;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
 public class User {
     
     private Integer id;
+    @Size(min = 2, message="Name should be two charecter")
     private String name;
+    @Past(message="Birth day should be past")
     private LocalDate birthDate;
 
     public User(Integer id, String name, LocalDate birthDate) {
