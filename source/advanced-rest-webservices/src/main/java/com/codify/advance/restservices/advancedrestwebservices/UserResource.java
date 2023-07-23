@@ -4,6 +4,9 @@ import java.net.URI;
 import java.util.List;
 
 import org.aspectj.lang.annotation.RequiredTypes;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +31,19 @@ public class UserResource {
     public List<User> getUsers(){
         return daoService.findAllUsers();
     }
+
+    /*@GetMapping(path = "/user/{id}")
+    public EntityModel<User> getUserById(@PathVariable int id){
+        User user = daoService.findUserById(id);
+        if(user == null){
+            throw new UserNotFoundException("id: "+id);
+        }
+
+        EntityModel<User> entityModel =  EntityModel.of(user);
+        WebMvcLinkBuilder mvcLinkBuilder = linkTo(null).retriveAllUsers();
+        entityModel.add(mvcLinkBuilder.withRel("all-users"));
+        return entityModel;
+    }*/
 
     @GetMapping(path = "/user/{id}")
     public User getUserById(@PathVariable int id){
